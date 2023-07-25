@@ -48,6 +48,8 @@ type AvgPriceByYearData = ResponseData<{ price: string; year: string; }>;
 type TopPriceByYearData = ResponseData<{ price: string; name: string; }>;
 // prettier-ignore
 type OrderByBrandYearData = ResponseData<{ name: string; order_count: string; }>;
+// prettier-ignore
+type GetPriceByYearAndFuel = ResponseData<{ year: string; fuel: string; }>;
 
 function RankList({
   data,
@@ -104,6 +106,10 @@ export default function Home() {
     `/api/gateway/price_by_brand_year?year=${year}`,
     fetcher as Fetcher<TopPriceByYearData, string>
   );
+  const { data: getPriceByYearAndFuel } = useSWR(
+    `/api/gateway/get_price_by_year_and_fuel?year=${year}&fuel=${fuel}`,
+    fetcher as Fetcher<GetPriceByYearAndFuel, string>
+  )
 
   const options = {
     responsive: true,
